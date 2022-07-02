@@ -7,6 +7,7 @@
 		<Block class="block" v-if="isPlaying" :delay="delay" @end="endGame" />
 		<!-- <p v-if="showResults"></p> -->
 		<Results v-if="showResults" :score="score" />
+		<SaveHighscoreButton v-if="showResults" />
 	</div>
 
 	<!-- <audio ref="audio"      hidden="true">
@@ -20,12 +21,14 @@
 <script>
 import Block from "./components/Block.vue";
 import Results from "./components/Results.vue";
+import SaveHighscoreButton from './components/SaveHighscoreButton.vue';
 
 export default {
 	name: "App",
 	components: {
 		Block,
 		Results,
+        SaveHighscoreButton,
 	},
 	data() {
 		return {
