@@ -7,7 +7,7 @@
 		<Block class="block" v-if="isPlaying" :delay="delay" @end="endGame" />
 		<!-- <p v-if="showResults"></p> -->
 		<Results v-if="showResults" :score="score" />
-		<SaveHighscoreButton v-if="showResults" />
+		<SaveHighscoreButton v-if="showResults" :time="score"/>
 	</div>
 
 	<!-- <audio ref="audio"      hidden="true">
