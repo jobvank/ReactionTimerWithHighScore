@@ -1,0 +1,89 @@
+<template>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Reaction time</th>
+      </tr>
+    </thead>
+    <tbody>  
+      <tr v-if="rows > 0">
+        <td>{{ topScores[0].name }}</td><td>{{ topScores[0].reaction_time }}ms</td>        
+      </tr>
+      <tr v-if="rows > 1">
+        <td>{{ topScores[1].name }}</td><td>{{ topScores[1].reaction_time }}ms</td>
+      </tr>
+      <tr v-if="rows > 2">
+        <td>{{ topScores[2].name }}</td><td>{{ topScores[2].reaction_time }}ms</td>
+      </tr>
+      <tr v-if="rows > 3">
+        <td>{{ topScores[3].name }}</td><td>{{ topScores[3].reaction_time }}ms</td>
+      </tr>
+      <tr v-if="rows > 4">
+        <td>{{ topScores[4].name }}</td><td>{{ topScores[4].reaction_time }}ms</td>
+      </tr>
+      <tr v-if="rows > 5">
+        <td>{{ topScores[5].name }}</td><td>{{ topScores[5].reaction_time }}ms</td>
+      </tr>
+      <tr v-if="rows > 6">
+        <td>{{ topScores[6].name }}</td><td>{{ topScores[6].reaction_time }}ms</td>
+      </tr>
+      <tr v-if="rows > 7">
+        <td>{{ topScores[7].name }}</td><td>{{ topScores[7].reaction_time }}ms</td>
+      </tr>
+      <tr v-if="rows > 8">
+        <td>{{ topScores[8].name }}</td><td>{{ topScores[8].reaction_time }}ms</td>
+      </tr>
+      <tr v-if="rows > 9">
+        <td>{{ topScores[9].name }}</td><td>{{ topScores[9].reaction_time }}ms</td>
+      </tr>
+    </tbody>
+  </table>
+</template>
+
+<script>
+import { createClient } from '@supabase/supabase-js'
+const supabase = createClient(process.env.VUE_APP_SUPABASE_URL, process.env.VUE_APP_SUPABASE_KEY)
+
+export default {
+  data() {
+    return {
+      topScores: []
+    }
+  },
+  computed: {
+    rows() {
+      return this.topScores.length  
+    }
+  },
+  mounted() {
+    this.fetchHighScores();
+  },
+  methods: {
+    async fetchHighScores() {
+      const { data: scores, error } = await supabase
+      .from('scores')
+      .select('*')
+      console.log(scores);
+      scores.sort((a, b) => {
+        if (a.reaction_time < b.reaction_time) {
+          return -1;
+        } else if (a.reaction_time > b.reaction_time) {
+          return 1;
+        }
+        return 0;  
+      });
+
+      let i = 0;
+      while (i < (scores.length < 10 ? scores.length : 10)) {
+        this.topScores.push(scores[i]);
+        i++;  
+      }  
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>

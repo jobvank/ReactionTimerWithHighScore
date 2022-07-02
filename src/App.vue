@@ -4,10 +4,14 @@
 		<button @click="start" :disabled="isPlaying">
 			Play <i class="fa-solid fa-gamepad"></i>
 		</button>
+		<button @click="toggleHighscores" v-if="showResults">
+			Show highscores
+		</button>
 		<Block class="block" v-if="isPlaying" :delay="delay" @end="endGame" />
 		<!-- <p v-if="showResults"></p> -->
 		<Results v-if="showResults" :score="score" />
-		<SaveHighscoreButton v-if="showResults" :time="score"/>
+		<SaveHighscoreButton v-if="showResults" :time="score"/>		
+		<ShowHighscores v-if="showHighscores&&showResults" class="highscoreTable"/>
 	</div>
 
 	<!-- <audio ref="audio"      hidden="true">
@@ -22,6 +26,7 @@
 import Block from "./components/Block.vue";
 import Results from "./components/Results.vue";
 import SaveHighscoreButton from './components/SaveHighscoreButton.vue';
+import ShowHighscores from './components/ShowHighscores.vue';
 
 export default {
 	name: "App",
@@ -29,6 +34,7 @@ export default {
 		Block,
 		Results,
         SaveHighscoreButton,
+		ShowHighscores
 	},
 	data() {
 		return {
@@ -36,6 +42,7 @@ export default {
 			delay: null,
 			score: null,
 			showResults: false,
+			showHighscores: false
 		};
 	},
 	mounted() {
@@ -58,6 +65,10 @@ export default {
 			this.isPlaying = false;
 			this.showResults = true;
 		},
+
+		toggleHighscores() {
+			this.showHighscores = !this.showHighscores;
+		}
 	},
 };
 </script>
@@ -94,6 +105,9 @@ button {
 }
 
 body {
-	overflow: hidden;
+	overflow: scroll;
+}
+.highscoreTable {
+	margin: 10px auto;
 }
 </style>
