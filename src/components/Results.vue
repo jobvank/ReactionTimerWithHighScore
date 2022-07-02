@@ -4,7 +4,7 @@
 	<div v-if="this.score < 250">
 		<img :src="urlm" alt="" />
 	</div>
-	<div v-else="this.score > 250">
+	<div v-else>
 		<img :src="url" alt="" />
 	</div>
 
