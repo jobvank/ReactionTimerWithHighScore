@@ -41,7 +41,7 @@ export default {
         ]);
       
       if (error) {
-        console.lof(`Supabase error: ${error}`)
+        console.log(`Supabase error: ${error}`)
       } else {
         this.isSaved = true;
         this.saved();
