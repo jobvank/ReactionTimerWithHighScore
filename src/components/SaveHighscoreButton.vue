@@ -26,13 +26,26 @@ export default {
     },
 
     async saveHighscore() {
-      this.isSaved = true;
+      if (this.name === "" && this.time < 250) {
+        this.name = "Anonymous Neo"
+      } else if (this.name === "" && this.time < 400) {
+        this.name = "Anonymous Bloodclat"
+      } else if (this.name === "") {
+        this.name = "Anonymous Rastaman"
+      }
+      
       const { data, error } = await supabase
         .from('scores')
         .insert([
           { name: this.name, reaction_time: this.time }
         ]);
-      this.saved();  
+      
+      if (error) {
+        console.lof(`Supabase error: ${error}`)
+      } else {
+        this.isSaved = true;
+        this.saved();
+      }        
     }
   }
 }

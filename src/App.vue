@@ -58,6 +58,9 @@ export default {
 			this.delay = 2000 + Math.random() * 5000;
 			this.isPlaying = true;
 			this.showResults = false;
+			if (this.showHighscores) {
+				this.toggleHighscores();
+			}
 
 			// console.log(this.delay);
 		},
@@ -79,7 +82,7 @@ export default {
 			}
 		},
 
-		updateHighscores() {
+		updateHighscores() {			
 			this.update++;
 		}
 	},
