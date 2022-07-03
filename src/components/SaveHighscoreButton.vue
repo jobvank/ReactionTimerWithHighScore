@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!saved">
+  <div v-if="!isSaved">
     <label>Your name:</label>
     <input id="name" v-model="name">
     <button @click="saveHighscore">Save highscore</button>
@@ -14,20 +14,25 @@ export default {
   data() {
     return {
       name: "",
-      saved: false
+      isSaved: false
     }
   },
   props: {
     time: 0
   },
   methods: {
+    saved() {
+      this.$emit('saved');  
+    },
+
     async saveHighscore() {
-      this.saved = true;
+      this.isSaved = true;
       const { data, error } = await supabase
         .from('scores')
         .insert([
           { name: this.name, reaction_time: this.time }
-        ])  
+        ]);
+      this.saved();  
     }
   }
 }

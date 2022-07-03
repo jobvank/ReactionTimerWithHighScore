@@ -5,13 +5,13 @@
 			Play <i class="fa-solid fa-gamepad"></i>
 		</button>
 		<button @click="toggleHighscores" v-if="showResults">
-			Show highscores
+			{{ highscoreButtonLabel }}
 		</button>
 		<Block class="block" v-if="isPlaying" :delay="delay" @end="endGame" />
 		<!-- <p v-if="showResults"></p> -->
 		<Results v-if="showResults" :score="score" />
-		<SaveHighscoreButton v-if="showResults" :time="score"/>		
-		<ShowHighscores v-if="showHighscores&&showResults" class="highscoreTable"/>
+		<SaveHighscoreButton v-if="showResults" :time="score" @saved="updateHighscores" />		
+		<ShowHighscores v-if="showHighscores&&showResults" :key="update" class="highscoreTable" />
 	</div>
 
 	<!-- <audio ref="audio"      hidden="true">
@@ -38,11 +38,13 @@ export default {
 	},
 	data() {
 		return {
+			update: 0,
 			isPlaying: false,
 			delay: null,
 			score: null,
 			showResults: false,
-			showHighscores: false
+			showHighscores: false,
+			highscoreButtonLabel: "Show Highscores"
 		};
 	},
 	mounted() {
@@ -64,10 +66,21 @@ export default {
 			this.score = reactionTime;
 			this.isPlaying = false;
 			this.showResults = true;
+			this.showHighscores = false;
 		},
 
 		toggleHighscores() {
-			this.showHighscores = !this.showHighscores;
+			if (this.showHighscores) {
+				this.showHighscores = false;
+				this.highscoreButtonLabel = "Show highscores";
+			} else {
+				this.showHighscores = true;
+				this.highscoreButtonLabel = "Hide highscores";
+			}
+		},
+
+		updateHighscores() {
+			this.update++;
 		}
 	},
 };
