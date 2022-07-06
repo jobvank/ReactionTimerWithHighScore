@@ -9,7 +9,9 @@
     </thead>
     <tbody>        
       <tr v-for="n in this.rows" :key="n.id">
-        <td>{{ n }}.</td><td>{{ topScores[n - 1].name }}</td><td>{{ topScores[n - 1].reaction_time }}ms</td>        
+        <td>{{ n }}.</td>
+        <td>{{ topScores[n - 1].name }}</td>
+        <td>{{ topScores[n - 1].reaction_time }}ms</td>        
       </tr>           
     </tbody>
   </table>
